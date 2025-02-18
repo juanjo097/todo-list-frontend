@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUserModalComponent } from '../add-user-modal/add-user-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -16,26 +17,47 @@ import { AddUserModalComponent } from '../add-user-modal/add-user-modal.componen
 export class LoginComponent {
   loginForm: FormGroup;
   userNotFound = false;
+  isLoading: boolean = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private dialog : MatDialog) {
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      const { email } = this.loginForm.value;
-      console.log('Validating email:', email);
-
-      // this.dialog.open(AddUserModalComponent);
-
-      const existingUsers = ['user@example.com', 'admin@example.com'];
-      if (existingUsers.includes(email)) {
-        this.router.navigate(['/dashboard']); // Redirige al dashboard
-      } else {
-        this.userNotFound = true;
-      }
+    if (this.loginForm.invalid) {
+      this.snackBar.open(
+        'Por favor, completa el formulario correctamente.',
+        'Cerrar',
+        {
+          duration: 2000,
+        }
+      );
+      return;
     }
+
+    this.isLoading = true;
+
+    setTimeout(() => {
+      const { email, password } = this.loginForm.value;
+      if (email === 'test@test.com') {
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.snackBar.open(
+          'Credenciales incorrectas. Intenta de nuevo.',
+          'Cerrar',
+          {
+            duration: 2000,
+          }
+        );
+      }
+      this.isLoading = false;
+    }, 2000);
   }
 }
