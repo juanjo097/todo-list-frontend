@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ResponseUser, User } from '../../shared/models/user';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   private baseUrl = environment.apiUrl;
   private userIdSubject = new BehaviorSubject<string | null>(this.getUserId()); // check the behavior of userId if any change
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   // login and set the userId in the session storage
   login(email : string) : Observable<ResponseUser> {
@@ -35,6 +36,7 @@ export class AuthService {
   // cerrar session
   logout(): void {
     sessionStorage.removeItem('userId');
+    this.router.navigate(['/login'])
     this.userIdSubject.next(null);
   }
 

@@ -37,7 +37,13 @@ export class AddUserModalComponent {
             const { email, userId } = data;
             if (email && userId) {
               sessionStorage.setItem('userId', userId);
+              this.snackBar.open('User created successfully, redirecting to dashboard',
+                'Close', {
+                  duration : 2000
+                }
+              )
             }
+            this.dialogRef.close('success');
           }
         },
         error : (error) => { console.error(error) }

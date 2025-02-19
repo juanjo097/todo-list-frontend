@@ -41,16 +41,11 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.snackBar.open(
-        'Por favor, completa el formulario correctamente.',
-        'Cerrar',
-        {
-          duration: 2000,
-        }
-      );
+      this.snackBar.open('Please complete the form correctly.', 'Close', {
+        duration: 2000,
+      });
       return;
     }
-
     this.isLoading = true;
     const { email } = this.loginForm.value;
     this.authService.login(email).subscribe({
@@ -61,10 +56,24 @@ export class LoginComponent {
           this.router.navigate(['/dashboard']);
           this.isLoading = false;
         } else {
-          this.dialog.open(AddUserModalComponent, {
+          // lets declare our modal in case the user not exists
+          let dialogRef = this.dialog.open(AddUserModalComponent, {
             height: '300px',
             width: '360px',
             data: { email },
+          });
+          // after close modal and if is success redirect to dashboard
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log(result);
+            if (result) {
+              setTimeout(() => {
+                this.router.navigate(['/dashboard']);
+              }, 2000);
+            } else {
+              this.snackBar.open('An error has ocurred.', 'Close', {
+                duration: 2000,
+              });
+            }
           });
         }
       },
@@ -72,20 +81,5 @@ export class LoginComponent {
         console.error('Login Error', error);
       },
     });
-
-    // setTimeout(() => {
-    //   if (email === 'test@test.com') {
-    //     this.router.navigate(['/dashboard']);
-    //   } else {
-    //     this.snackBar.open(
-    //       'Credenciales incorrectas. Intenta de nuevo.',
-    //       'Cerrar',
-    //       {
-    //         duration: 2000,
-    //       }
-    //     );
-    //   }
-    //   this.isLoading = false;
-    // }, 2000);
   }
 }
