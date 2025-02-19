@@ -1,7 +1,20 @@
-<h2 mat-dialog-title>Este es un Modal</h2>
+<h2 mat-dialog-title> Email not registered </h2>
 <mat-dialog-content>
-  <p>Contenido del modal aquí...</p>
+  <p> Please enter your email to crate an user.</p>
+  <form [formGroup]="createUserForm" action="">
+    <mat-form-field appearance="fill" class="input-field full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" class="">
+      <mat-error *ngIf="createUserForm.get('email')?.hasError('required')">
+        Email is required.
+      </mat-error>
+      <mat-error *ngIf="createUserForm.get('email')?.hasError('email')">
+        Please enter a valid email.
+      </mat-error>
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="close()">Cerrar</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-flat-button color="primary" (click)="saveUser()">Guardar</button>
 </mat-dialog-actions>

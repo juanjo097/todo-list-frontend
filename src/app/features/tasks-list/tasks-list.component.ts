@@ -17,9 +17,15 @@ export class TaskListComponent {
 
   @Output() edit = new EventEmitter<Task>();
   @Output() delete = new EventEmitter<Task>();
+  @Output() taskCompleted = new EventEmitter<Task>();
 
   ngOnChanges() {
     console.log('Tareas actualizadas en TaskListComponent:', this.tasks);
+  }
+
+  toggleComplete(task: Task, isChecked: boolean) {
+    task.completed = isChecked;
+    this.taskCompleted.emit(task);
   }
 
   editTask(task: Task) {

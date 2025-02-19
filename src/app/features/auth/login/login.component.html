@@ -21,12 +21,16 @@
         </mat-form-field>
 
         <div class="button-container">
-          <button mat-raised-button class="login-button" type="submit" [disabled]="loginForm.invalid || isLoading">
+          <button mat-raised-button
+                  class="login-button"
+                  type="submit"
+                  [disabled]="loginForm.invalid || isLoading">
             <ng-container *ngIf="isLoading; else submitText">
               Loading...
             </ng-container>
             <ng-template #submitText>Login</ng-template>
           </button>
+          <button mat-raised-button (click)="openAddModal()"> open modal </button>
         </div>
       </form>
     </mat-card-content>

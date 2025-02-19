@@ -6,7 +6,10 @@
     </div>
     <hr/>
     <div class="task-list-container">
-      <app-task-list [tasks]="filteredTasks"></app-task-list>
+      <app-task-list [tasks]="paginatedTasks"
+      (edit)="onEditTask($event)"
+      (delete)="onDeleteTask($event)"
+      (taskCompleted)="onTaskCompleted($event)"></app-task-list>
     </div>
     <div class="paginator-container">
       <app-paginator [length]="filteredTasks.length" [pageSize]="pageSize" (pageChanged)="onPageChange($event)">

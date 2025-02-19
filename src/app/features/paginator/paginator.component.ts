@@ -19,7 +19,6 @@ export class PaginatorComponent {
 
   ngAfterViewInit() {
     this.paginator.page.subscribe(event => {
-      console.log('Evento de paginación detectado:', event);
       this.pageChanged.emit(event);
     });
   }

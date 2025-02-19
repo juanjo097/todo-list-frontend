@@ -1,6 +1,9 @@
 <div class="task-list">
   <mat-card class="task-card" *ngFor="let task of tasks">
     <div class="task-content">
+      <mat-checkbox [checked]="task.completed"
+      (change)="toggleComplete(task, $event.checked)" >
+      </mat-checkbox>
       <div class="task-info">
         <mat-card-title>{{ task.title }}</mat-card-title>
         <mat-card-content>{{ task.description }}</mat-card-content>

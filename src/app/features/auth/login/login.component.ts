@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUserModalComponent } from '../add-user-modal/add-user-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,10 +24,18 @@ export class LoginComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
+    private authService: AuthService,
     private snackBar: MatSnackBar
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+    });
+  }
+
+  openAddModal() {
+    this.dialog.open(AddUserModalComponent, {
+      height: '300px',
+      width: '400px',
     });
   }
 
@@ -43,21 +52,40 @@ export class LoginComponent {
     }
 
     this.isLoading = true;
+    const { email } = this.loginForm.value;
+    this.authService.login(email).subscribe({
+      next: (rsp) => {
+        const { data, message } = rsp;
+        // if user exists redirect to dashboard
+        if (data) {
+          this.router.navigate(['/dashboard']);
+          this.isLoading = false;
+        } else {
+          this.dialog.open(AddUserModalComponent, {
+            height: '300px',
+            width: '360px',
+            data: { email },
+          });
+        }
+      },
+      error: (error) => {
+        console.error('Login Error', error);
+      },
+    });
 
-    setTimeout(() => {
-      const { email, password } = this.loginForm.value;
-      if (email === 'test@test.com') {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.snackBar.open(
-          'Credenciales incorrectas. Intenta de nuevo.',
-          'Cerrar',
-          {
-            duration: 2000,
-          }
-        );
-      }
-      this.isLoading = false;
-    }, 2000);
+    // setTimeout(() => {
+    //   if (email === 'test@test.com') {
+    //     this.router.navigate(['/dashboard']);
+    //   } else {
+    //     this.snackBar.open(
+    //       'Credenciales incorrectas. Intenta de nuevo.',
+    //       'Cerrar',
+    //       {
+    //         duration: 2000,
+    //       }
+    //     );
+    //   }
+    //   this.isLoading = false;
+    // }, 2000);
   }
 }

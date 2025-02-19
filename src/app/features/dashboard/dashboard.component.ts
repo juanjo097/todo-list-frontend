@@ -4,6 +4,7 @@ import { FilterComponent } from '../filter/filter.component';
 import { TaskListComponent } from '../tasks-list/tasks-list.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { MaterialModule } from '../../shared/modules/material.module';
+import { Task } from '../../shared/models/tasks';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,16 +24,16 @@ export class DashboardComponent {
   @ViewChild(TaskListComponent) taskListComponent!: TaskListComponent;
 
   tasks = [
-    { title: 'Aprender Angular', description: 'Revisar componentes y servicios' },
-    { title: 'Hacer pruebas', description: 'Implementar unit tests' },
-    { title: 'Mejorar UI', description: 'Ajustar diseño en Material' },
-    { title: 'Optimizar código', description: 'Refactorizar componentes' },
-    { title: 'Aprender RxJS', description: 'Estudiar observables' },
-    { title: 'Configurar Backend', description: 'Conectar con Flask' },
+    { title: 'Aprender Angular', description: 'Revisar componentes y servicios', completed: true },
+    { title: 'Hacer pruebas', description: 'Implementar unit tests', completed: false },
+    { title: 'Mejorar UI', description: 'Ajustar diseño en Material', completed: false },
+    { title: 'Optimizar código', description: 'Refactorizar componentes', completed: false },
+    { title: 'Aprender RxJS', description: 'Estudiar observables', completed: false },
+    { title: 'Configurar Backend', description: 'Conectar con Flask', completed: false },
   ];
 
   filteredTasks = [...this.tasks];
-  paginatedTasks: { title: string; description: string }[] = [];
+  paginatedTasks: Task[] = [];
   pageSize = 3;
   pageIndex = 0;
 
@@ -61,17 +62,41 @@ export class DashboardComponent {
     this.updatePaginatedTasks();
   }
 
+  /**
+   * Updates the paginated tasks based on the current page index and page size.
+   * It slices the filtered tasks array to get the tasks for the current page
+   * and assigns them to the `paginatedTasks` array. Then, it logs the paginated tasks
+   * to the console and updates the task list component if it exists.
+   *
+   * @remarks
+   * This method assumes that `pageIndex`, `pageSize`, `filteredTasks`, and `taskListComponent`
+   * are defined and properly initialized in the component.
+   */
   updatePaginatedTasks() {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedTasks = [...this.filteredTasks.slice(startIndex, endIndex)];
     console.log('Tareas paginadas al inicio:', this.paginatedTasks);
 
-    // Forzar actualización en TaskListComponent
     if (this.taskListComponent) {
       this.taskListComponent.updateTasks(this.paginatedTasks);
     }
   }
 
+  onEditTask(task: Task) {
+    console.log('Editar tarea:', task);
+  }
+
+  onDeleteTask(task: Task) {
+    console.log('Eliminar tarea:', task);
+    this.tasks = this.tasks.filter(t => t !== task);
+    this.updatePaginatedTasks();
+  }
+
+  onTaskCompleted(task: Task) {
+    console.log(`Tarea: ${task.title} ahora está ${task.completed ? 'completada' : 'pendiente'}`);
+    console.log('Completar Tarea:', task);
+
+  }
 
 }
