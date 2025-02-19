@@ -1,0 +1,17 @@
+<app-header title="Mis Tareas"></app-header>
+<div class="container">
+  <div class="dashboard-container">
+    <div class="filter-container">
+      <app-filter (filterChanged)="applyFilter($event)"></app-filter>
+    </div>
+    <hr/>
+    <div class="task-list-container">
+      <app-task-list [tasks]="filteredTasks"></app-task-list>
+    </div>
+    <div class="paginator-container">
+      <app-paginator [length]="filteredTasks.length" [pageSize]="pageSize" (pageChanged)="onPageChange($event)">
+      </app-paginator>
+    </div>
+    <hr/>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="task-list">
+  <mat-card class="task-card" *ngFor="let task of tasks">
+    <div class="task-content">
+      <div class="task-info">
+        <mat-card-title>{{ task.title }}</mat-card-title>
+        <mat-card-content>{{ task.description }}</mat-card-content>
+      </div>
+      <div class="task-actions">
+        <button mat-icon-button color="primary" (click)="editTask(task)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteTask(task)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>

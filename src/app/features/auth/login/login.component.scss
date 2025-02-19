@@ -1,10 +1,9 @@
-/* Fondo */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #6c5b7b, #c06c84);
+  background: linear-gradient(135deg, #ec407a, #546e7a);
 }
 
 .login-card {
@@ -13,9 +12,7 @@
   padding: 30px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   border-radius: 12px;
-  background-color: #ffffff;
   text-align: center;
-  color: #333333;
 }
 
 .header-content {
@@ -29,11 +26,12 @@
 mat-card-title {
   font-weight: bold;
   margin-bottom: 1rem;
+  color: #FFF;
 }
 
 mat-icon {
   margin-right: 10px;
-  color: #9b59b6;
+  color: #FFF;
   margin-bottom: 1rem;
 }
 
@@ -47,33 +45,28 @@ mat-form-field {
 }
 
 mat-label {
-  color: #9b59b6;
+  color: #FFF;
 }
 
 .login-button {
-  background-color: #9b59b6;
+  background-color: #ec407a;
   color: white;
   font-size: 16px;
   text-transform: none;
   width: 100%;
   padding: 12px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   border: none;
 }
 
 .login-button:hover {
-  background-color: #8e44ad;
+  background-color: #d81b60;
 }
 
 .login-button:disabled {
-  background-color: #cccccc;
+  background-color: #b0bec5;
   cursor: not-allowed;
 }
 
-mat-error {
-  color: #e74c3c;
-  font-size: 12px;
-  margin-top: 4px;
-}

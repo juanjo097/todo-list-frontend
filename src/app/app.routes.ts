@@ -12,7 +12,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('./features/tasks/tasks.component').then((m) => m.TasksComponent),
+      import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
   },
 
   // Redirige a login si la ruta no existe

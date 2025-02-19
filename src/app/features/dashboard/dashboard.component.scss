@@ -1,0 +1,39 @@
+
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: #121212;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10rem 7rem 0 7rem;
+
+  @media (max-width: 1200px) {
+    padding: 8rem 5rem 0 5rem;
+  }
+
+  @media (max-width: 992px) {
+    padding: 7rem 4rem 0 4rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 4rem 2rem 0 2rem;
+  }
+
+  @media (max-width: 576px) {
+    padding: 2rem 1rem 0 1rem;
+  }
+}
+
+.task-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.paginator-container {
+  justify-content: center;
+  margin-top: 20px;
+}
