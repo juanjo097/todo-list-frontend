@@ -1,10 +1,14 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { HeaderComponent } from '../../shared/ui/header/header.component';
 import { FilterComponent } from '../filter/filter.component';
 import { TaskListComponent } from '../tasks-list/tasks-list.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 import { MaterialModule } from '../../shared/modules/material.module';
 import { Task } from '../../shared/models/tasks';
+import { AuthService } from '../../core/services/auth.service';
+import { TasksService } from '../../core/services/tasks.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TasksModalComponent } from '../tasks-modal/tasks-modal.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,89 +18,112 @@ import { Task } from '../../shared/models/tasks';
     FilterComponent,
     TaskListComponent,
     PaginatorComponent,
-    MaterialModule
+    MaterialModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent {
-
   @ViewChild(TaskListComponent) taskListComponent!: TaskListComponent;
 
-  tasks = [
-    { title: 'Aprender Angular', description: 'Revisar componentes y servicios', completed: true },
-    { title: 'Hacer pruebas', description: 'Implementar unit tests', completed: false },
-    { title: 'Mejorar UI', description: 'Ajustar diseño en Material', completed: false },
-    { title: 'Optimizar código', description: 'Refactorizar componentes', completed: false },
-    { title: 'Aprender RxJS', description: 'Estudiar observables', completed: false },
-    { title: 'Configurar Backend', description: 'Conectar con Flask', completed: false },
-  ];
-
-  filteredTasks = [...this.tasks];
+  tasks: Task[] = [];
+  filteredTasks: Task[] = [];
   paginatedTasks: Task[] = [];
   pageSize = 3;
   pageIndex = 0;
 
+  constructor(
+    private authService: AuthService,
+    private tasksService: TasksService,
+    private dialogRef : MatDialog
+  ) {}
+
   ngOnInit() {
-    this.updatePaginatedTasks();
+    const userId = this.authService.getUserId();
+    if (userId) {
+      this.loadTasks(userId);
+    }
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.taskListComponent.updateTasks(this.paginatedTasks);
+  loadTasks(userId: string) {
+    this.tasksService.getUserTasks(userId).subscribe({
+      next: ({ data, message }) => {
+        if (data && message === 'success') {
+          this.setTasks(data);
+        }
+      },
+      error: (error) => console.error(error),
     });
   }
 
+  setTasks(tasks: Task[]) {
+    this.tasks = tasks;
+    this.filteredTasks = [...tasks];
+    this.updatePaginatedTasks();
+  }
+
+  updatePaginatedTasks() {
+    const start = this.pageIndex * this.pageSize;
+    this.paginatedTasks = this.filteredTasks.slice(
+      start,
+      start + this.pageSize
+    );
+    this.taskListComponent?.updateTasks(this.paginatedTasks);
+  }
+
   applyFilter(filterText: string) {
-    this.filteredTasks = this.tasks.filter(task =>
+    this.filteredTasks = this.tasks.filter((task) =>
       task.title.toLowerCase().includes(filterText.toLowerCase())
     );
     this.pageIndex = 0;
     this.updatePaginatedTasks();
   }
 
-  onPageChange(event: any) {
-    console.log('Evento de paginación recibido:', event);
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
+  onPageChange({
+    pageIndex,
+    pageSize,
+  }: {
+    pageIndex: number;
+    pageSize: number;
+  }) {
+    this.pageIndex = pageIndex;
+    this.pageSize = pageSize;
     this.updatePaginatedTasks();
   }
 
-  /**
-   * Updates the paginated tasks based on the current page index and page size.
-   * It slices the filtered tasks array to get the tasks for the current page
-   * and assigns them to the `paginatedTasks` array. Then, it logs the paginated tasks
-   * to the console and updates the task list component if it exists.
-   *
-   * @remarks
-   * This method assumes that `pageIndex`, `pageSize`, `filteredTasks`, and `taskListComponent`
-   * are defined and properly initialized in the component.
-   */
-  updatePaginatedTasks() {
-    const startIndex = this.pageIndex * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.paginatedTasks = [...this.filteredTasks.slice(startIndex, endIndex)];
-    console.log('Tareas paginadas al inicio:', this.paginatedTasks);
-
-    if (this.taskListComponent) {
-      this.taskListComponent.updateTasks(this.paginatedTasks);
-    }
+  handleTaskChange(updatedTasks: Task[]) {
+    this.setTasks(updatedTasks);
   }
 
-  onEditTask(task: Task) {
+  onAddEditTask(task?: Task) {
     console.log('Editar tarea:', task);
+    const dialogRef = this.dialogRef.open(TasksModalComponent, {
+      width: '400px',
+      data : { task }
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (task) {
+          Object.assign(task, result);
+        } else {
+          this.tasks.push({ id: Date.now(), ...result });
+          this.setTasks(this.tasks);
+        }
+      }
+    });
   }
 
   onDeleteTask(task: Task) {
     console.log('Eliminar tarea:', task);
-    this.tasks = this.tasks.filter(t => t !== task);
-    this.updatePaginatedTasks();
+    this.handleTaskChange(this.tasks.filter((t) => t !== task));
   }
 
   onTaskCompleted(task: Task) {
-    console.log(`Tarea: ${task.title} ahora está ${task.completed ? 'completada' : 'pendiente'}`);
-    console.log('Completar Tarea:', task);
-
+    console.log(
+      `Tarea: ${task.title} ahora está ${
+        task.completed ? 'completada' : 'pendiente'
+      }`
+    );
   }
-
 }

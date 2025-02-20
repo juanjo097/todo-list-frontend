@@ -1,20 +1,26 @@
 <app-header title="Mis Tareas"></app-header>
 <div class="container">
   <div class="dashboard-container">
-    <div class="filter-container">
-      <app-filter (filterChanged)="applyFilter($event)"></app-filter>
+    <div class="new-task">
+      <button mat-fab color="primary" (click)="onAddEditTask()">
+        <mat-icon>add</mat-icon>
+      </button>
     </div>
-    <hr/>
+    <div class="filter-container">
+      <app-filter (filterChanged)="applyFilter($event)" />
+    </div>
+    <mat-divider></mat-divider>
     <div class="task-list-container">
       <app-task-list [tasks]="paginatedTasks"
-      (edit)="onEditTask($event)"
-      (delete)="onDeleteTask($event)"
-      (taskCompleted)="onTaskCompleted($event)"></app-task-list>
+        (edit)="onAddEditTask($event)"
+        (delete)="onDeleteTask($event)"
+        (taskCompleted)="onTaskCompleted($event)" />
     </div>
+    <mat-divider></mat-divider>
     <div class="paginator-container">
-      <app-paginator [length]="filteredTasks.length" [pageSize]="pageSize" (pageChanged)="onPageChange($event)">
-      </app-paginator>
+      <app-paginator [length]="filteredTasks.length"
+        [pageSize]="pageSize"
+        (pageChanged)="onPageChange($event)"/>
     </div>
-    <hr/>
   </div>
 </div>

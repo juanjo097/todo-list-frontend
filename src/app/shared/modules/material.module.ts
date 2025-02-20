@@ -16,7 +16,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
@@ -37,7 +38,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatToolbarModule,
     MatPaginatorModule,
     MatCheckboxModule,
-
+    MatDividerModule,
+    MatDialogModule,
   ],
   exports: [
     MatButtonModule,
@@ -54,7 +56,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,
     MatToolbarModule,
     MatPaginatorModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDividerModule,
+    MatDialogModule,
   ],
 })
 export class MaterialModule {}

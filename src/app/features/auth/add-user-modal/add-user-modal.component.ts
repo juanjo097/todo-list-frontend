@@ -30,10 +30,8 @@ export class AddUserModalComponent {
   saveUser() {
     if (this.createUserForm.valid) {
       this.authService.createUser(this.createUserForm.value).subscribe({
-        next : (rsp) => {
-          console.log(rsp)
-          const { data, message } = rsp;
-          if(data && message == 'success') {
+        next : ({data, message}) => {
+          if(data && message === 'success') {
             const { email, userId } = data;
             if (email && userId) {
               sessionStorage.setItem('userId', userId);

@@ -1,6 +1,11 @@
-export type Task = {
+export interface Task {
   title: string;
   description: string;
   completed : boolean;
-  previousState?: boolean;
+  createdAt: string;
 };
+
+export interface ResponseTasks {
+  data : Task[]|[];
+  message : string;
+}

@@ -49,10 +49,9 @@ export class LoginComponent {
     this.isLoading = true;
     const { email } = this.loginForm.value;
     this.authService.login(email).subscribe({
-      next: (rsp) => {
-        const { data, message } = rsp;
+      next: ({ data, message }) => {
         // if user exists redirect to dashboard
-        if (data) {
+        if (data && message === 'success') {
           this.router.navigate(['/dashboard']);
           this.isLoading = false;
         } else {
@@ -64,7 +63,6 @@ export class LoginComponent {
           });
           // after close modal and if is success redirect to dashboard
           dialogRef.afterClosed().subscribe((result) => {
-            console.log(result);
             if (result) {
               setTimeout(() => {
                 this.router.navigate(['/dashboard']);

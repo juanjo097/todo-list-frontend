@@ -1,18 +1,21 @@
 <div class="task-list">
   <mat-card class="task-card" *ngFor="let task of tasks">
     <div class="task-content">
-      <mat-checkbox [checked]="task.completed"
-      (change)="toggleComplete(task, $event.checked)" >
-      </mat-checkbox>
+      <div class="checkbox">
+        <mat-checkbox [checked]="task.completed"
+        (change)="toggleComplete(task, $event.checked)" >
+        </mat-checkbox>
+      </div>
       <div class="task-info">
-        <mat-card-title>{{ task.title }}</mat-card-title>
-        <mat-card-content>{{ task.description }}</mat-card-content>
+        <mat-card-title [ngClass]="{ 'completed-task': task.completed }">{{ task.title }}</mat-card-title>
+        <mat-card-content [ngClass]="{ 'completed-task': task.completed }">{{ task.description }}</mat-card-content>
+        <mat-card-subtitle [ngClass]="{ 'completed-task': task.completed }">Created at: {{ task.createdAt | date:'short' }}</mat-card-subtitle>
       </div>
       <div class="task-actions">
-        <button mat-icon-button color="primary" (click)="editTask(task)">
+        <button mat-mini-fab color="primary" (click)="editTask(task)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteTask(task)">
+        <button mat-mini-fab color="warn" (click)="deleteTask(task)">
           <mat-icon>delete</mat-icon>
         </button>
       </div>

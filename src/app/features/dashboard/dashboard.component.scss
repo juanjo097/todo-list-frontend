@@ -32,9 +32,15 @@
 .task-list-container {
   display: flex;
   flex-direction: column;
+  margin: 1rem 0 1rem;
 }
 
 .paginator-container {
   justify-content: center;
   margin-top: 20px;
+}
+.new-task {
+  flex-direction:column;
+  margin: 1rem 0;
+  align-self:flex-end;
 }

@@ -49,9 +49,4 @@ export class AuthService {
     return this.userIdSubject.asObservable();
   }
 
-  // check if the user id authenticated
-  isAuthenticated(): boolean {
-    return !!this.getUserId();
-  }
-
 }

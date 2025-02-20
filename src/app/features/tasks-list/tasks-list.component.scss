@@ -1,13 +1,14 @@
 mat-card-title {
   font-size: 20px;
   font-weight: bold;
-  padding: 5px;
+  padding: 0;
   color: #FFF;
+
 }
 
 mat-card-content {
   color: #FFF;
-
+  padding: 7px 0 10px 0;
 }
 
 .task-card {
@@ -34,9 +35,15 @@ mat-card-content {
 
 .task-info {
   flex: 1;
+  margin-left: 1rem;
 }
 
 .task-actions {
   display: flex;
+  gap: 1rem;
 }
 
+.completed-task {
+  text-decoration: line-through;
+  color: gray;
+}
