@@ -6,7 +6,7 @@ The design was created with simplicity and intuitiveness in mind, making it as u
 
 ## Demo
 
-
+![App Demo](assets/demo.gif)
 
 
 ## Features
