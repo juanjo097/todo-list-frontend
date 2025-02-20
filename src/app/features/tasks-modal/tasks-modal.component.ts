@@ -24,7 +24,7 @@ export class TasksModalComponent {
     this.isEditMode = !!data.task;
     this.taskForm = this.formBuilder.group({
       title: [data.task?.title || '', Validators.required],
-      description: [data.task?.description || ''],
+      description: [data.task?.description || '', Validators.required],
       completed: [data.task?.completed || false],
     })
   }

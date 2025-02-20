@@ -35,6 +35,7 @@ export class DashboardComponent {
   pageSize = 3;
   pageIndex = 0;
   userId: string = '';
+  email : string = '';
 
   /* since the checkbox can duplicate calls to the api
     that's why I decided to add a debounceTime to prevent
@@ -62,7 +63,9 @@ export class DashboardComponent {
   ) {}
 
   ngOnInit() {
-    this.userId = this.authService.getUserId() || '';
+    const user = this.authService.getUserIdAndEmail();
+    this.userId = user ? user.userId || '' : '';
+    this.email = user ? user.email || '' : '';
     if (this.userId) {
       this.loadTasks();
     }

@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   private baseUrl = environment.apiUrl;
-  private userIdSubject = new BehaviorSubject<string | null>(this.getUserId()); // check the behavior of userId if any change
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -23,6 +22,7 @@ export class AuthService {
         if (response.data) {
           if (response.data.userId) {
             sessionStorage.setItem('userId', response.data.userId);
+            sessionStorage.setItem('email', response.data.email);
           }
         }
       })
@@ -37,16 +37,13 @@ export class AuthService {
   logout(): void {
     sessionStorage.removeItem('userId');
     this.router.navigate(['/login'])
-    this.userIdSubject.next(null);
   }
 
-  getUserId(): string | null {
-    return sessionStorage.getItem('userId');
-  }
-
-  // observable to subscribe every change in userId
-  getUserId$(): Observable<string | null> {
-    return this.userIdSubject.asObservable();
+  getUserIdAndEmail(): { userId: string | null, email: string | null } {
+    return {
+      userId: sessionStorage.getItem('userId'),
+      email: sessionStorage.getItem('email')
+    };
   }
 
 }
