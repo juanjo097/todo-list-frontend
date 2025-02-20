@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { MaterialModule } from '../../modules/material.module';
-import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -11,7 +10,6 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  @Input() title: string = 'To-Do List';
 
   constructor(public authService: AuthService) {}
 

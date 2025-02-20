@@ -1,24 +1,35 @@
 <div class="task-list">
-  <mat-card class="task-card" *ngFor="let task of tasks">
-    <div class="task-content">
-      <div class="checkbox">
-        <mat-checkbox [checked]="task.completed"
-        (change)="toggleComplete(task, $event.checked)" >
-        </mat-checkbox>
+  <ng-container *ngIf="tasks.length > 0; else noTasks">
+    <mat-card class="task-card" *ngFor="let task of tasks">
+      <div class="task-content">
+        <div class="checkbox">
+          <mat-checkbox [checked]="task.completed"
+          (change)="toggleComplete(task, $event.checked)" >
+          </mat-checkbox>
+        </div>
+        <div class="task-info">
+          <mat-card-title [ngClass]="{ 'completed-task': task.completed }">{{ task.title }}</mat-card-title>
+          <mat-card-content [ngClass]="{ 'completed-task': task.completed }">{{ task.description }}</mat-card-content>
+          <mat-card-subtitle [ngClass]="{ 'completed-task': task.completed }">Created at: {{ task.createdAt | date:'short' }}</mat-card-subtitle>
+        </div>
+        <div class="task-actions">
+          <button mat-mini-fab color="primary" (click)="editTask(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-mini-fab color="warn" (click)="deleteTask(task)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
-      <div class="task-info">
-        <mat-card-title [ngClass]="{ 'completed-task': task.completed }">{{ task.title }}</mat-card-title>
-        <mat-card-content [ngClass]="{ 'completed-task': task.completed }">{{ task.description }}</mat-card-content>
-        <mat-card-subtitle [ngClass]="{ 'completed-task': task.completed }">Created at: {{ task.createdAt | date:'short' }}</mat-card-subtitle>
-      </div>
-      <div class="task-actions">
-        <button mat-mini-fab color="primary" (click)="editTask(task)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-mini-fab color="warn" (click)="deleteTask(task)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
+    </mat-card>
+  </ng-container>
+  <ng-template #noTasks>
+    <div class="no-tasks-message">
+      <mat-card>
+        <mat-card-content>
+          <p>No tasks available. Please add a new task!</p>
+        </mat-card-content>
+      </mat-card>
     </div>
-  </mat-card>
+  </ng-template>
 </div>

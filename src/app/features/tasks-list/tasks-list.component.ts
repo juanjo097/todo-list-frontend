@@ -19,10 +19,6 @@ export class TaskListComponent {
   @Output() delete = new EventEmitter<Task>();
   @Output() taskCompleted = new EventEmitter<Task>();
 
-  ngOnChanges() {
-    console.log('Tareas actualizadas en TaskListComponent:', this.tasks);
-  }
-
   toggleComplete(task: Task, isChecked: boolean) {
     task.completed = isChecked;
     this.taskCompleted.emit(task);
@@ -37,7 +33,6 @@ export class TaskListComponent {
   }
 
   updateTasks(newTasks: Task[]) {
-    this.tasks = [...newTasks]; // Cambiamos la referencia para que Angular detecte el cambio
-    console.log('Tareas actualizadas en TaskList:', this.tasks);
+    this.tasks = [...newTasks];
   }
 }

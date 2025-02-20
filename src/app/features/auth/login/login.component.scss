@@ -3,7 +3,8 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #ec407a, #546e7a);
+  // background: #7b1fa2
+  background-color: #121212;
 }
 
 .login-card {
@@ -49,7 +50,6 @@ mat-label {
 }
 
 .login-button {
-  background-color: #ec407a;
   color: white;
   font-size: 16px;
   text-transform: none;
@@ -59,10 +59,6 @@ mat-label {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   border: none;
-}
-
-.login-button:hover {
-  background-color: #d81b60;
 }
 
 .login-button:disabled {

@@ -25,10 +25,9 @@ export class TasksModalComponent {
     this.taskForm = this.formBuilder.group({
       title: [data.task?.title || '', Validators.required],
       description: [data.task?.description || ''],
-      completed: [data.task?.completed || false]
+      completed: [data.task?.completed || false],
     })
   }
-
 
   save() {
     if(this.taskForm.valid) {
