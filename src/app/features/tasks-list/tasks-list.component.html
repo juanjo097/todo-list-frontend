@@ -13,7 +13,7 @@
           <mat-card-subtitle [ngClass]="{ 'completed-task': task.completed }">Created at: {{ task.createdAt | date:'short' }}</mat-card-subtitle>
         </div>
         <div class="task-actions">
-          <button mat-mini-fab color="primary" (click)="editTask(task)">
+          <button mat-mini-fab color="primary" (click)="editTask(task)" [disabled]="task.completed">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-mini-fab color="warn" (click)="deleteTask(task)">

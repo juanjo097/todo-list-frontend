@@ -1,27 +1,33 @@
-# TodoListFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.12.
+# To-Do List App
 
-## Development server
+To-Do List App is a web application developed in Angular that allows users to efficiently manage their tasks. It includes an authentication system, an interactive dashboard where tasks can be viewed, and features to create, filter, and organize to-dos.
+The design was created with simplicity and intuitiveness in mind, making it as user-friendly as possible.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Demo
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Features
 
-## Running unit tests
+- Login with email validation
+- Dashboard to manage tasks.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Tech Stack
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+**Client:** Angular 17, Angular Material, rxjs.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Installation
+
+Install todo-list-frontend with following commands
+
+```bash
+$ cd todo-list-frontend
+$ npm install
+$ ng serve
+```
+    
