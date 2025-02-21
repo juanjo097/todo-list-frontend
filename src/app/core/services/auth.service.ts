@@ -36,6 +36,7 @@ export class AuthService {
   // cerrar session
   logout(): void {
     sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('email');
     this.router.navigate(['/login'])
   }
 
